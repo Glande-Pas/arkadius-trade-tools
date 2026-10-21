@@ -322,12 +322,12 @@ function ArkadiusTradeToolsSales:RescanHistory()
     local function UpdateProcessor(guildIndex, guildId)
         local guildName = GetGuildName(guildId)
         logger:Info("Rescanning guild", guildName)
-        local processor = self.guildListeners[guildId]
+        local processor = self.guildProcessors[guildId]
         if processor then
             processor:Stop()
         end
         processor = LibHistoire:CreateGuildHistoryProcessor(guildId, GUILD_HISTORY_EVENT_CATEGORY_TRADER, ArkadiusTradeTools.NAME)
-        self.guildListeners[guildId] = processor
+        self.guildProcessors[guildId] = processor
         if not processor then
             logger:Warn("No trader history processor for", guildName)
             return
@@ -351,12 +351,12 @@ end
 
 function ArkadiusTradeToolsSales:RegisterLibHistoire()
     logger:Info('Registering LibHistoire')
-    self.guildListeners = {}
+    self.guildProcessors = {}
     local function SetUpProcessor(guildIndex, guildId)
         local guildName = GetGuildName(guildId)
         logger:Info("Setting up for guild", guildName)
         local processor = LibHistoire:CreateGuildHistoryProcessor(guildId, GUILD_HISTORY_EVENT_CATEGORY_TRADER, ArkadiusTradeTools.NAME)
-        self.guildListeners[guildId] = processor
+        self.guildProcessors[guildId] = processor
         if not processor then
             logger:Warn("No trader history processor for", guildName)
             return

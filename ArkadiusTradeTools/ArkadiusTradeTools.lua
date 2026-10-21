@@ -125,7 +125,7 @@ function ArkadiusTradeTools:Initialize()
   EVENT_MANAGER:RegisterForUpdate('ArkadiusTradeToolsGuildStatus', 1000, function()
     Logger:Verbose("ArkadiusTradeToolsGuildStatus callback")
     local setOne = false
-    local processors = self.Modules.Sales.guildListeners
+    local processors = self.Modules.Sales.guildProcessors
     if not processors then return end -- Sales has not registered with LibHistoire yet
     for i, guild in ipairs(self.guilds) do
       local categoryCache = processors[guild.id] and processors[guild.id].categoryCache
